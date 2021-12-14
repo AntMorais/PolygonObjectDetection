@@ -1,0 +1,10 @@
+../data_rotation/images/val/Image__2021-12-13__11-26-59.png
+../data_rotation/images/val/Image__2021-12-13__11-26-13.png
+../data_rotation/images/val/Image__2021-12-13__11-26-28.png
+../data_rotation/images/val/Image__2021-12-13__11-26-18.png
+../data_rotation/images/val/Image__2021-12-13__11-26-34.png
+../data_rotation/images/val/Image__2021-12-13__11-26-09.png
+../data_rotation/images/val/Image__2021-12-13__11-26-23.png
+../data_rotation/images/val/Image__2021-12-13__11-27-02.png
+../data_rotation/images/val/Image__2021-12-13__11-26-55.png
+../data_rotation/images/val/Image__2021-12-13__11-26-41.png
