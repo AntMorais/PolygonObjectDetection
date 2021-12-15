@@ -8,10 +8,10 @@ width_multiple: 0.50  # layer channel multiple
 # [10,13, 16,30, 33,23] represents 3 predefined anchors of x1, y1, x2, y2, x3, y3
 # there are three anchor layers: layer 1 [31, ..., 31]; layer 2 [46, ..., 74]; layer 3 [94, ..., 151]
 anchors:
-  - [158  42  45 157 155  68] # P3/8
-  - [ 71 155  89 155 155  91] # P4/16
-  - [108 147 145 114 128 135]  # P5/32
-  
+  - [158,42,45,157,155,68] # P3/8
+  - [71,155,89,155,155,91] # P4/16
+  - [108,147,145,114,128,135]  # P5/32
+
 # YOLOv5 backbone
 backbone:
   # [from, number, module, args]
