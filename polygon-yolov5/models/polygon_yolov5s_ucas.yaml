@@ -8,14 +8,10 @@ width_multiple: 0.50  # layer channel multiple
 # [10,13, 16,30, 33,23] represents 3 predefined anchors of x1, y1, x2, y2, x3, y3
 # there are three anchor layers: layer 1 [31, ..., 31]; layer 2 [46, ..., 74]; layer 3 [94, ..., 151]
 anchors:
-# For UCAS dataset with imgsz 1024
+# for rotated tubes dataset with img size 1024
   - [31, 30, 28, 49, 50, 31]  # P3/8
   - [46, 45, 58, 58, 74, 74]  # P4/16
   - [94, 94, 115, 115, 151, 151]  # P5/32
-# For Coco dataset with imgsz 640
-#   - [ 29,  34,  60,  60, 127,  69,  80, 127, 139, 127]  # P3/8
-#   - [134, 207, 237, 118, 214, 196, 317, 198, 193, 337]  # P4/16
-#   - [499, 162, 345, 298, 548, 288, 417, 453, 618, 443]  # P5/32
 
 # YOLOv5 backbone
 backbone:
