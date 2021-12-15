@@ -1,8 +1,8 @@
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
 # train: ../data_rotation/train.txt  # 40 images
 # val: ../data_rotation/val.txt  # 10 images
-train: /Users/antoniomorais/Work/PolygonObjectDetection/data_rotation/images/train
-val: /Users/antoniomorais/Work/PolygonObjectDetection/data_rotation/images/val
+train: /Users/antoniomorais/Work/PolygonObjectDetection/data_rotation/train.txt
+val: /Users/antoniomorais/Work/PolygonObjectDetection/data_rotation/val.txt
 
 # number of classes
 nc: 1
