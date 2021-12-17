@@ -524,7 +524,7 @@ def polygon_plot_images(images, targets, paths=None, fname='images.jpg', names=N
 
         block_x = int(w * (i // ns))
         block_y = int(h * (i % ns))
-
+        img = np.zeros(img.shape)
         img = img.transpose(1, 2, 0)
         if scale_factor < 1:
             img = cv2.resize(img, (w, h))
