@@ -972,7 +972,6 @@ def polygon_non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, cla
         Runs Non-Maximum Suppression (NMS) on inference results for polygon boxes
         Returns:  list of detections, on (n,10) tensor per image [xyxyxyxy, conf, cls]
     """
-    
     # prediction has the shape of (bs, all potential anchors, 89)
     assert not agnostic, "polygon does not support agnostic"
     nc = prediction.shape[2] - 9  # number of classes
@@ -1044,7 +1043,7 @@ def polygon_non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, cla
             x = x[x[:, 8].argsort(descending=True)[:max_nms]]  # sort by confidence
 
         # Polygon NMS does not support Batch NMS and Agnostic
-        # x is the sorted predictions with boxes x[:, :8], confidence x[:, 8], class x[:, 9]         
+        # x is the sorted predictions with boxes x[:, :8], confidence x[:, 8], class x[:, 9]
         # cannot use torchvision.ops.nms, which only deals with axis-aligned boxes
         i = polygon_nms_kernel(x, iou_thres)  # polygon-NMS
         if i.shape[0] > max_det:  # limit detections

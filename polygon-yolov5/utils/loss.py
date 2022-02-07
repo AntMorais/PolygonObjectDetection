@@ -174,6 +174,7 @@ class ComputeLoss:
                             # [1, 1], [1, -1], [-1, 1], [-1, -1],  # jk,jm,lk,lm
                             ], device=targets.device).float() * g  # offsets
 
+        # for each label
         for i in range(self.nl):
             anchors = self.anchors[i]
             gain[2:6] = torch.tensor(p[i].shape)[[3, 2, 3, 2]]  # xyxy gain
@@ -314,7 +315,6 @@ class Polygon_ComputeLoss:
             p: nl x bs x na x ny x nx x no
             targets: image,class,x1,y1,x2,y2,x3,y3,x4,y4 (x1, y1...represent the relative positions)
         """
-        
         na, nt = self.na, targets.shape[0]  # number of anchors, targets
         tcls, tbox, indices, anch = [], [], [], []
         # gain has 11 elements: img id, class id, xyxyxyxy, anchor id
@@ -340,20 +340,16 @@ class Polygon_ComputeLoss:
                 t_width = (t[..., 2:10:2].max(dim=-1)[0]-t[..., 2:10:2].min(dim=-1)[0])[..., None]
                 t_height = (t[..., 3:10:2].max(dim=-1)[0]-t[..., 3:10:2].min(dim=-1)[0])[..., None]
                 wh = torch.cat((t_width, t_height), dim=-1)
-                
                 # Using shape matches
                 # r = wh / anchors[:, None]  # wh ratio
                 # j = torch.max(r, 1. / r).max(2)[0] < self.hyp['anchor_t']  # compare
-                
                 # Consider only best anchors
                 # max_ious, max_ious_idx = wh_iou(anchors, wh[0]).max(dim=0)
                 # mask = max_ious > self.hyp['iou_t']
                 # t = t[max_ious_idx[mask], mask]
-                
                 # Consider all anchors that exceed the iou threshold
                 j = wh_iou(anchors, wh[0]) > self.hyp['iou_t'] # iou criterion
                 t = t[j]  # filter
-                
                 # now t has shape nt x 11
                 # Offsets
                 center_x = t[:, 2:10:2].mean(dim=-1)[:, None]
@@ -374,24 +370,22 @@ class Polygon_ComputeLoss:
             b, c = t[:, :2].long().T  # image, class
             center_x = t[:, 2:10:2].mean(dim=-1)[:, None]
             center_y = t[:, 3:10:2].mean(dim=-1)[:, None]
+            # absolute coordinates of the grid centers?
             gxy = torch.cat((center_x, center_y), dim=-1)  # grid xy
             gij = (gxy - offsets).long()
             gi, gj = gij.T  # grid xy indices
 
             # Append
-            # tbox represents the relative positions from xyxyxyxy to center (in grid)
+            # tbox represents the relative positions from corners (xyxyxyxy) to target grid center
             t[:, 2:10] = order_corners(t[:, 2:10])
             a = t[:, 10].long()  # anchor indices
             indices.append((b, a, gj.clamp_(0, gain[3] - 1), gi.clamp_(0, gain[2] - 1)))  # image, anchor, grid indices
-            
             # same corners, different center points, different relative positions
             tbox.append(t[:, 2:10]-gij.repeat(1, 4))  # polygon box
             # different corners, different center points, same relative positions
             # gij_origin = (gxy-0).long()
             # tbox.append(t[:, 2:10]-gij_origin.repeat(1, 4))
-            
             anch.append(anchors[a])  # anchors
             tcls.append(c)  # class
 
         return tcls, tbox, indices, anch
-    

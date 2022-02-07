@@ -286,7 +286,7 @@ def parse_model(d, ch, polygon=False):  # model_dict, input_channels(3)
             ch = []
         ch.append(c2)
         # The following is used for train head from scratch
-        
+
     return nn.Sequential(*layers), sorted(save)
 
 
@@ -298,7 +298,7 @@ class Polygon_Detect(Detect):
     onnx_dynamic = False  # ONNX export parameter
 
     def __init__(self, nc=80, anchors=(), ch=(), inplace=True):  # detection layer for polygon
-        super(Polygon_Detect, self).__init__(nc, anchors, ch, inplace)        
+        super(Polygon_Detect, self).__init__(nc, anchors, ch, inplace)
         self.no = nc + 9  # number of outputs per anchor
         self.m = nn.ModuleList(nn.Conv2d(x, self.no * self.na, 1) for x in ch)  # output conv
 
@@ -323,9 +323,9 @@ class Polygon_Detect(Detect):
                     xyxyxyxy = (y[..., :8] + self.grid[i].repeat((1, 1, 1, 1, 4))) * self.stride[i]  # xyxyxyxy
                     y = torch.cat((xyxyxyxy, y[..., 8:]), -1)
                 z.append(y.view(bs, -1, self.no))
-                
+
         return x if self.training else (torch.cat(z, 1), x)
-    
+
 
 class Polygon_Model(Model):
     # Polygon_Model class for model with polygon anchor boxes
